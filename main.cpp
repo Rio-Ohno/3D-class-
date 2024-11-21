@@ -26,6 +26,7 @@
 #include "bullet.h"
 #include "explosion.h"
 #include "meshfield.h"
+#include "meshcylinder.h"
 
 //グローバル変数宣言
 LPDIRECT3D9 g_pD3D = NULL;											 //DirectX3Dオブジェクトへのポインタ
@@ -318,6 +319,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	SetBillboard(D3DXVECTOR3(0.0f, 5.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 10.0f);
 
+	InitMeshCylinder();
+
 	InitWall();
 
 	SetWall(D3DXVECTOR3(-50.0f, 25.0f, 50.0f), D3DXVECTOR3(0.0f, -D3DX_PI / 2.0f, 0.0f), 100.0f, 50.0f, 0.0f, 0.7f);//左
@@ -379,6 +382,8 @@ void Uninit()
 	UninitMeshField();
 
 	UninitBillboard();
+
+	UninitMeshCylinder();
 
 	UninitWall();
 
@@ -480,6 +485,8 @@ void Update()
 
 	UpdateBillboard();
 
+	UpdateMeshCylinder();
+
 	UpdateWall();
 
 	UpdateCamera();
@@ -541,7 +548,9 @@ void Draw()
 
 		DrawShadow();
 
-		DrawWall();
+		DrawMeshCylinder();
+
+		//DrawWall();
 
 		//DrawModel();
 
