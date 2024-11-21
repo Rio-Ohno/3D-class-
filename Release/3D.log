@@ -1,0 +1,31 @@
+﻿  billboard.cpp
+  bullet.cpp
+  camera.cpp
+C:\Users\student\source\repos\3D\camera.cpp(165,68): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\student\source\repos\3D\camera.cpp(166,68): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\student\source\repos\3D\camera.cpp(167,68): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\student\source\repos\3D\camera.cpp(169,68): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\student\source\repos\3D\camera.cpp(171,68): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+  effect.cpp
+  explosion.cpp
+  input.cpp
+  light.cpp
+  main.cpp
+C:\Users\student\source\repos\3D\meshcylinder.h(16,1): warning C4005: 'MAX_VERTEX': マクロが再定義されました。
+C:\Users\student\source\repos\3D\meshfield.h(16): message : 'MAX_VERTEX' の以前の定義を確認してください
+C:\Users\student\source\repos\3D\meshcylinder.h(17,1): warning C4005: 'MAX_INDX': マクロが再定義されました。
+C:\Users\student\source\repos\3D\meshfield.h(17): message : 'MAX_INDX' の以前の定義を確認してください
+C:\Users\student\source\repos\3D\meshcylinder.h(18,1): warning C4005: 'MAX_POLY': マクロが再定義されました。
+C:\Users\student\source\repos\3D\meshfield.h(18): message : 'MAX_POLY' の以前の定義を確認してください
+  meshcylinder.cpp
+  meshfieid.cpp
+  model.cpp
+  player.cpp
+  polygon.cpp
+  shadow.cpp
+  wall.cpp
+  コード生成しています。
+  Previous IPDB not found, fall back to full compilation.
+  All 99 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  コード生成が終了しました。
+  3D.vcxproj -> C:\Users\student\source\repos\3D\3D.exe
