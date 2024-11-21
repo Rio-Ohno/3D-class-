@@ -54,18 +54,21 @@ void InitMeshField()
 	//頂点バッファをロック
 	g_pVtxBuffMeshField->Lock(0, 0, (void**)&pVtx, 0);
 
-	for (int nCnt = 0; nCnt < MAX_POLY; nCnt++)
-	{
+	//for (int nCnt = 0; nCnt < MAX_POLY; nCnt++)
+	//{
 		//頂点座標の設定
 		pVtx[0].pos = D3DXVECTOR3(-100.0f, 0.0f, 100.0f);
 		pVtx[1].pos = D3DXVECTOR3(0.0f, 0.0f, 100.0f);
 		pVtx[2].pos = D3DXVECTOR3(100.0f, 0.0f, 100.0f);
-		pVtx[3].pos = D3DXVECTOR3(-100.0f, 0.0f, 0.0f);
-		pVtx[4].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		pVtx[5].pos = D3DXVECTOR3(100.0f, 0.0f, 0.0f);
-		pVtx[6].pos = D3DXVECTOR3(-100.0f, 0.0f, -100.0f);
-		pVtx[7].pos = D3DXVECTOR3(0.0f, 0.0f, -100.0f);
-		pVtx[8].pos = D3DXVECTOR3(100.0f, 0.0f, -100.0f);
+		pVtx[3].pos = D3DXVECTOR3(-100.0f, 0.0f, 50.0f);
+		pVtx[4].pos = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
+		pVtx[5].pos = D3DXVECTOR3(100.0f, 0.0f, 50.0f);
+		pVtx[6].pos = D3DXVECTOR3(-100.0f, 0.0f, -50.0f);
+		pVtx[7].pos = D3DXVECTOR3(0.0f, 0.0f, -50.0f);
+		pVtx[8].pos = D3DXVECTOR3(100.0f, 0.0f, -50.0f);
+		pVtx[9].pos = D3DXVECTOR3(-100.0f, 0.0f, -100.0f);
+		pVtx[10].pos = D3DXVECTOR3(0.0f, 0.0f, -100.0f);
+		pVtx[11].pos = D3DXVECTOR3(100.0f, 0.0f, -100.0f);
 
 		//各頂点の法線の設定
 		pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -77,6 +80,9 @@ void InitMeshField()
 		pVtx[6].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 		pVtx[7].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 		pVtx[8].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+		pVtx[9].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+		pVtx[10].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+		pVtx[11].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
 		//頂点カラーの設定
 		pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0);
@@ -88,19 +94,22 @@ void InitMeshField()
 		pVtx[6].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0);
 		pVtx[7].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0);
 		pVtx[8].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0);
+		pVtx[9].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0);
+		pVtx[10].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0);
+		pVtx[11].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0);
 
 		//テクスチャ座標の設定
-		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-		pVtx[1].tex = D3DXVECTOR2(0.5f, 0.0f);
-		pVtx[2].tex = D3DXVECTOR2(1.0f, 0.0f);
-		pVtx[3].tex = D3DXVECTOR2(0.0f, 0.5f);
-		pVtx[4].tex = D3DXVECTOR2(0.5f, 0.5f);
-		pVtx[5].tex = D3DXVECTOR2(1.0f, 0.5f);
-		pVtx[6].tex = D3DXVECTOR2(0.0f, 1.0f);
-		pVtx[7].tex = D3DXVECTOR2(0.5f, 1.0f);
-		pVtx[8].tex = D3DXVECTOR2(1.0f, 1.0f);
+		//pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+		//pVtx[1].tex = D3DXVECTOR2(0.5f, 0.0f);
+		//pVtx[2].tex = D3DXVECTOR2(1.0f, 0.0f);
+		//pVtx[3].tex = D3DXVECTOR2(0.0f, 0.5f);
+		//pVtx[4].tex = D3DXVECTOR2(0.5f, 0.5f);
+		//pVtx[5].tex = D3DXVECTOR2(1.0f, 0.5f);
+		//pVtx[6].tex = D3DXVECTOR2(0.0f, 1.0f);
+		//pVtx[7].tex = D3DXVECTOR2(0.5f, 1.0f);
+		//pVtx[8].tex = D3DXVECTOR2(1.0f, 1.0f);
 
-	}
+	//}
 	//頂点バッファのアンロック
 	g_pVtxBuffMeshField->Unlock();
 
@@ -117,16 +126,16 @@ void InitMeshField()
 		for (nCntx = 0; nCntx <= MAX_X; nCntx++)
 		{
 
-			pIndx[0] = (MAX_X + nCntx + 1) * (nCntz + 1);
-			pIndx[1] = nCntx * (nCntz * (MAX_X+1));
+			pIndx[0] = (MAX_X + 1) * (nCntz + 1) + nCntx;
+			pIndx[1] = nCntx + (nCntz * (MAX_X + 1));
 
 			pIndx += 2;
 		}
 
 		if (nCntz < MAX_Z - 1)
 		{
-			pIndx[0] = nCntx * (nCntz * (MAX_X + 1));
-			pIndx[1] = nCntx * (nCntz * (MAX_X + 1)) + (MAX_X + 2) * (nCntz + 1);
+			pIndx[0] = (nCntx-1) + (nCntz * (MAX_X + 1));
+			pIndx[1] = (nCntx - 1) + (nCntz * (MAX_X + 1)) + (MAX_X + 2) * (nCntz + 1);
 			pIndx += 2;
 		}
 	}
