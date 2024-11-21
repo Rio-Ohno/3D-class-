@@ -44,14 +44,15 @@ void InitMeshCylinder()
 
 	//for (int nCnt = 0; nCnt < MAX_INDX; nCnt++)
 	//{
-	g_aMeshCylinder.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_aMeshCylinder.pos = D3DXVECTOR3(0.0f, 50.0f, 0.0f);
 	g_aMeshCylinder.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
-	int radius = 50;														//半径
 	//}
 
 	//頂点情報へのポインタ
 	VERTEX_3D* pVtx = NULL;
+	int radius = 150;														//半径
+	int index = 0;
 
 	//頂点バッファをロック
 	g_pVtxBuffMeshCylinder->Lock(0, 0, (void**)&pVtx, 0);
@@ -60,18 +61,19 @@ void InitMeshCylinder()
 	{
 		for (int nCntx = 0; nCntx <= MAX_X_CYLINDER; nCntx++)
 		{
-			const int index = nCntx + nCntz * (MAX_X_CYLINDER + 1);
+			//int index = nCntx + nCntz * (MAX_X_CYLINDER + 1);
 
 			float fAngle = D3DX_PI * 2 / MAX_X_CYLINDER * nCntx;
+			//radian=180/D3DX_PI
 
 			//頂点座標の設定
-			pVtx[index].pos = D3DXVECTOR3(sinf(D3DXToRadian(fAngle))*radius, 0.0f, cosf(D3DXToRadian(fAngle))*radius);
+			pVtx[index].pos = D3DXVECTOR3(sinf(fAngle) * radius, 100.0f * (MAX_Z_CYLINDER - nCntz), cosf(fAngle) * radius);
 
-			//各頂点の法線の設定
-			pVtx[index].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+			//各頂点から原点へのベクトル
+			D3DXVECTOR3 vec = pVtx[index].pos - g_aMeshCylinder.pos;
 
-			//ベクトルの正規化
-			D3DXVec3Normalize(&pVtx[index].nor, &pVtx[index].pos);
+			//ベクトルの正規化,各頂点の法線の設定
+			D3DXVec3Normalize(&pVtx[index].nor, &vec);
 			
 			//頂点カラーの設定
 			pVtx[index].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0);
@@ -86,6 +88,8 @@ void InitMeshCylinder()
 			//pVtx[6].tex = D3DXVECTOR2(0.0f, 1.0f);
 			//pVtx[7].tex = D3DXVECTOR2(0.5f, 1.0f);
 			//pVtx[8].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+			index++;
 		}
 	}
 //頂点バッファのアンロック
@@ -117,27 +121,6 @@ void InitMeshCylinder()
 			pIndx += 2;
 		}
 	}
-
-	//pIndx[0] = 3;
-	//pIndx[1] = 0;
-
-	//pIndx[2] = 4;
-	//pIndx[3] = 1;
-
-	//pIndx[4] = 5;
-	//pIndx[5] = 2;
-
-	//pIndx[6] = 2;
-	//pIndx[7] = 6;
-
-	//pIndx[8] = 6;
-	//pIndx[9] = 3;
-
-	//pIndx[10] = 7;
-	//pIndx[11] = 4;
-
-	//pIndx[12] = 8;
-	//pIndx[13] = 5;
 
 	//インデックスをアンロック
 	g_pIndxBuffMeshCylinder->Unlock();
