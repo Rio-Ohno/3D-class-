@@ -7,6 +7,7 @@
 
 #include"player.h"
 #include "bullet.h"
+#include "block.h"
 
 //グロ－バル変数宣言
 LPD3DXMESH g_pMeshPlayer = NULL;
@@ -29,6 +30,7 @@ void InitPlayer()
 	g_pBuffmatPlayer = NULL;
 	g_dwNumMatPlayer = 0;
 	g_player.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_player.posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_player.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_player.rotDest= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_player.nIndxShadow = SetShadow(g_player.pos,g_player.rot,D3DXVECTOR3(1.0f,0.5f,1.0f));
@@ -45,6 +47,63 @@ void InitPlayer()
 		NULL,
 		&g_dwNumMatPlayer,
 		&g_pMeshPlayer);
+
+	int nNumVtx;//最大頂点数
+	DWORD sizeFVF;//頂点フォーマットのサイズ
+	BYTE* pVtxBUff;//頂点バッファへのポインタ
+
+	//頂点数の取得
+	nNumVtx = g_pMeshPlayer->GetNumVertices();
+
+	//頂点フォーマットのサイズを取得
+	sizeFVF = D3DXGetFVFVertexSize(g_pMeshPlayer->GetFVF());
+
+	//頂点バッファのロック
+	g_pMeshPlayer->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVtxBUff);
+
+	for (int nCnt = 0; nCnt < nNumVtx; nCnt++)
+	{
+		//頂点座標の代入
+		D3DXVECTOR3 vtx = *(D3DXVECTOR3*)pVtxBUff;
+
+		//頂点座標を比較してモデルの最大最小を取得
+
+		if (vtx.x > g_player.vtxMax.x)//x最大値
+		{
+			g_player.vtxMax.x = vtx.x;
+		}
+		else if (vtx.x < g_player.vtxMin.x)//x最小値
+		{
+			g_player.vtxMin.x = vtx.x;
+		}
+
+		if (vtx.y > g_player.vtxMax.y)//y最大値
+		{
+			g_player.vtxMax.y = vtx.y;
+		}
+		else if (vtx.y < g_player.vtxMin.y)//y最小値
+		{
+			g_player.vtxMin.y = vtx.y;
+		}
+
+		if (vtx.z > g_player.vtxMax.z)//z最大値
+		{
+			g_player.vtxMax.z = vtx.z;
+		}
+		else if (vtx.z < g_player.vtxMin.z)//z最小値
+		{
+			g_player.vtxMin.z = vtx.z;
+		}
+
+		//頂点フォーマットのサイズ分ポインタを進める
+		pVtxBUff += sizeFVF;
+	}
+
+	//頂点バッファのアンロック
+	g_pMeshPlayer->UnlockVertexBuffer();
+
+	//サイズの初期化
+	g_player.size = g_player.vtxMax - g_player.vtxMin;
 
 	//マテリアルデータへのポインタを取得
 	pMat = (D3DXMATERIAL*)g_pBuffmatPlayer->GetBufferPointer();
@@ -103,6 +162,8 @@ void UpdatePlayer()
 	//カメラの情報取得
 	Camera* pCamera = GetCamera();
 
+	g_player.posOld = g_player.pos;
+
 	if (GetKeyboardPress(DIK_LEFT) == true)
 	{
 		g_player.pos.x += sinf(pCamera->rot.y - D3DX_PI * 0.5f) * PLAYER_SPEED;
@@ -154,6 +215,9 @@ void UpdatePlayer()
 	{
 		g_player.rot.y += D3DX_PI * 2.0f;
 	}
+
+	CollisionBlock_X();
+	CollisionBlock_Z();
 
 	if (KeyboardTrigger(DIK_RETURN) == true)
 	{

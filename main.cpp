@@ -27,6 +27,7 @@
 #include "explosion.h"
 #include "meshfield.h"
 #include "meshcylinder.h"
+#include "block.h"
 
 //グローバル変数宣言
 LPDIRECT3D9 g_pD3D = NULL;											 //DirectX3Dオブジェクトへのポインタ
@@ -311,6 +312,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	InitPlayer();
 
+	InitBlock();
+
 	//InitPolygon();
 	InitMeshField();
 	//InitModel();
@@ -377,6 +380,8 @@ void Uninit()
 	UninitBullet();
 
 	UninitPlayer();
+
+	UninitBlock();
 
 	//UninitPolygon();
 	UninitMeshField();
@@ -480,6 +485,8 @@ void Update()
 
 	UpdatePlayer();
 
+	UpdateBlock();
+
 	//UpdatePolygon();
 	UpdateMeshField();
 
@@ -540,6 +547,8 @@ void Draw()
 		DrawBullet();
 
 		DrawPlayer();
+
+		DrawBlock();
 
 		//DrawPolygon();
 		DrawMeshField();

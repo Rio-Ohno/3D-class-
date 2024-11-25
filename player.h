@@ -21,8 +21,12 @@
 typedef struct
 {
 	D3DXVECTOR3 pos;					//位置
+	D3DXVECTOR3 posOld;					//前回の位置
 	D3DXVECTOR3 rot;					//向き
 	D3DXVECTOR3 rotDest;				//目標の向き
+	D3DXVECTOR3 vtxMin;					//モデルの最小値
+	D3DXVECTOR3 vtxMax;					//モデルの最大値
+	D3DXVECTOR3 size;					//サイズ(大きさ)
 	int nIndxShadow;					//影のインデックス格納用
 }Player;
 
