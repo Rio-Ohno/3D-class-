@@ -11,7 +11,6 @@
 //グローバル変数宣言
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffWall = NULL;									//頂点バッファへのポインタ
 LPDIRECT3DTEXTURE9 g_pTextureWall = NULL;										//テクスチャへのポインタ
-float fver[MAX_WALL];															//判定
 Wall g_aWall[MAX_WALL];
 
 //============================================================
@@ -235,11 +234,11 @@ void CollisionWall()
 			vecWall[nCnt] = aPos[1] - aPos[0];																//壁のベクトル
 			vecPlayer[nCnt] = pPlayer->pos - aPos[0];														//aPos[0]からプレイヤーへのベクトル
 
-			fver[nCnt] = (vecWall[nCnt].z * vecPlayer[nCnt].x) - (vecWall[nCnt].x * vecPlayer[nCnt].z);			//外積
+			g_aWall[nCnt].fver = (vecWall[nCnt].z * vecPlayer[nCnt].x) - (vecWall[nCnt].x * vecPlayer[nCnt].z);			//外積
 
-			if (fver[nCnt] > 0)
+			if (g_aWall[nCnt].fver > 0)
 			{
-				pPlayer->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				pPlayer->pos = D3DXVECTOR3(0.0f, 30.0f, 0.0f);
 			}
 		}
 		pVtx += 4;
@@ -249,7 +248,7 @@ void CollisionWall()
 	g_pVtxBuffWall->Unlock();
 }
 
-float fRever()
+Wall* GetWall()
 {
-	return fver[0];
+	return &g_aWall[0];
 }

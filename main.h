@@ -76,7 +76,6 @@ void DrawCameraControl();
 void DrawCameraRot();
 void DrawPlayerRot();
 void DrawPlayerPos();
-void Drawfver();
 LPDIRECT3DDEVICE9 GetDevice(void);
 void SetMode(MODE mode);
 MODE GetMode();

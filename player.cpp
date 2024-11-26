@@ -30,7 +30,7 @@ void InitPlayer()
 	g_pMeshPlayer = NULL;
 	g_pBuffmatPlayer = NULL;
 	g_dwNumMatPlayer = 0;
-	g_player.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_player.pos = D3DXVECTOR3(0.0f, 30.0f, 0.0f);
 	g_player.posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_player.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_player.rotDest= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -40,7 +40,7 @@ void InitPlayer()
 	D3DXMatrixIdentity(&g_mtxWorldPlayer);
 
 	//Xファイルの読込
-	D3DXLoadMeshFromX("data\\MODEL\\TV.x",
+	D3DXLoadMeshFromX("data\\MODEL\\01_head.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
@@ -220,7 +220,7 @@ void UpdatePlayer()
 	//当たり判定
 	//CollisionBlock_X();
 	//CollisionBlock_Z();
-	CollisionWall();
+	//CollisionWall();
 
 	if (KeyboardTrigger(DIK_RETURN) == true)
 	{
@@ -261,6 +261,9 @@ void DrawPlayer()
 	for (int nCnt = 0; nCnt < (int)g_dwNumMatPlayer; nCnt++)
 	{
 		//マテリアルの設定
+		pDevice->SetMaterial(&pMat[nCnt].MatD3D);
+
+		//テクスチャの設定
 		pDevice->SetTexture(0, g_apTexturePlayer[nCnt]);
 
 		//モデル(パーツ)の描画

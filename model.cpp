@@ -132,7 +132,11 @@ void DrawModel()
 
 	for (int nCnt = 0; nCnt < (int)g_dwNumMatModel; nCnt++)
 	{
+
 		//マテリアルの設定
+		pDevice->SetMaterial(&pMat[nCnt].MatD3D);
+
+		//テクスチャの設定
 		pDevice->SetTexture(0, g_apTextureModel[nCnt]);
 
 		//モデル(パーツ)の描画

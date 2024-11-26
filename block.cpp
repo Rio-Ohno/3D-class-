@@ -191,6 +191,9 @@ void DrawBlock()
 	for (int nCnt = 0; nCnt < (int)g_dwNumMatBlock; nCnt++)
 	{
 		//マテリアルの設定
+		pDevice->SetMaterial(&pMat[nCnt].MatD3D);
+
+		//テクスチャの設定
 		pDevice->SetTexture(0, g_apTextureBlock[nCnt]);
 
 		//モデル(パーツ)の描画

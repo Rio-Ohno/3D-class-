@@ -22,6 +22,7 @@ typedef struct
 	D3DXMATRIX mtxWorldWall;																//ワールドマトリックス
 	float fWidth;																			//幅
 	float fHight;																			//高さ
+	float fver;																				//判定
 	bool bUse;																				//使用しているかどうか
 }Wall;
 
@@ -32,6 +33,6 @@ void UpdateWall();																			//壁の更新処理
 void DrawWall();																			//壁の描画処理
 void SetWall(D3DXVECTOR3 pos, D3DXVECTOR3 rot,float fWidth,float fHight, float a);			//壁の設定処理
 void CollisionWall();																		//壁の当たり判定
-float fRever();
+Wall* GetWall();
 
 #endif // !_Wall_H_
