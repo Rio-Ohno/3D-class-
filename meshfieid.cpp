@@ -201,8 +201,6 @@ void DrawMeshField()
 	//計算用マトリックス
 	D3DXMATRIX mtxRot, mtxTrans;
 
-	//for (int nCnt = 0; nCnt < MAX_INDX; nCnt++)
-	//{
 		//ワールドマトリックスの初期化
 		D3DXMatrixIdentity(&g_aMeshField.mtxWorld);
 
@@ -231,5 +229,4 @@ void DrawMeshField()
 
 		//ポリゴンの描画
 		pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0,0,MAX_VERTEX_FIELD,0,MAX_POLY_FIELD);//タイプ,?,どのpVtxから描画するか,頂点数,どのインデックスから描画するか,ポリゴン数
-	//}
 }
