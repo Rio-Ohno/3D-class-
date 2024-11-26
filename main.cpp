@@ -312,7 +312,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	InitPlayer();
 
-	InitBlock();
+	//InitBlock();
 
 	//InitPolygon();
 	InitMeshField();
@@ -326,15 +326,15 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	InitWall();
 
-	SetWall(D3DXVECTOR3(-50.0f, 25.0f, 50.0f), D3DXVECTOR3(0.0f, -D3DX_PI / 2.0f, 0.0f), 100.0f, 50.0f, 0.0f, 0.7f);//左
-	SetWall(D3DXVECTOR3(50.0f, 25.0f, 50.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2.0f, 0.0f), 100.0f, 50.0f, 0.0f, 0.7f);//右
-	SetWall(D3DXVECTOR3(0.0f, 25.0f, 50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 100.0f, 50.0f, 0.0f, 0.7f);//奥
-	SetWall(D3DXVECTOR3(0.0f, 25.0f, -50.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), -100.0f, 50.0f, 0.0f, 0.7f);//手前
+	//SetWall(D3DXVECTOR3(-100.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, -D3DX_PI / 2.0f, 0.0f), 200.0f, 100.0f, 0.7f);//左
+	//SetWall(D3DXVECTOR3(100.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2.0f, 0.0f), 200.0f, 100.0f, 0.7f);//右
+	SetWall(D3DXVECTOR3(0.0f, 50.0f, 100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 200.0f, 100.0f, 0.7f);//奥
+	SetWall(D3DXVECTOR3(0.0f, 50.0f, -100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), -200.0f, 100.0f, 0.7f);//手前
 
-	SetWall(D3DXVECTOR3(-50.1f, 25.0f, -50.1f), D3DXVECTOR3(0.0f, D3DX_PI / 2.0f, 0.0f), 100.0f, 50.0f, 0.0f, 0.3f);//左裏
-	SetWall(D3DXVECTOR3(50.1f, 25.0f, -50.1f), D3DXVECTOR3(0.0f, -D3DX_PI / 2.0f, 0.0f), 100.0f, 50.0f, 0.0f, 0.3f);//右裏
-	SetWall(D3DXVECTOR3(0.0f, 25.0f, 50.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), -100.0f, 50.0f, 0.0f, 0.3f);//奥裏
-	SetWall(D3DXVECTOR3(0.0f, 25.0f, -50.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 100.0f, 50.0f, 0.0f, 0.3f);//手前裏
+	//SetWall(D3DXVECTOR3(-100.1f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2.0f, 0.0f), 200.0f, 100.0f, 0.3f);//左裏
+	//SetWall(D3DXVECTOR3(100.1f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, -D3DX_PI / 2.0f, 0.0f), 200.0f, 100.0f, 0.3f);//右裏
+	//SetWall(D3DXVECTOR3(0.0f, 50.0f, 100.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), -200.0f, 100.0f, 0.3f);//奥裏
+	//SetWall(D3DXVECTOR3(0.0f, 50.0f, -100.1f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 200.0f, 100.0f, 0.3f);//手前裏
 
 	InitCamera();
 
@@ -381,7 +381,7 @@ void Uninit()
 
 	UninitPlayer();
 
-	UninitBlock();
+	//UninitBlock();
 
 	//UninitPolygon();
 	UninitMeshField();
@@ -483,9 +483,7 @@ void Update()
 
 	UpdateBullet();
 
-	UpdatePlayer();
-
-	UpdateBlock();
+	//UpdateBlock();
 
 	//UpdatePolygon();
 	UpdateMeshField();
@@ -495,6 +493,8 @@ void Update()
 	UpdateMeshCylinder();
 
 	UpdateWall();
+
+	UpdatePlayer();
 
 	UpdateCamera();
 
@@ -548,7 +548,7 @@ void Draw()
 
 		DrawPlayer();
 
-		DrawBlock();
+		//DrawBlock();
 
 		//DrawPolygon();
 		DrawMeshField();
@@ -559,7 +559,7 @@ void Draw()
 
 		DrawMeshCylinder();
 
-		//DrawWall();
+		DrawWall();
 
 		//DrawModel();
 
@@ -580,8 +580,11 @@ void Draw()
 		//プレイヤーの角度
 		DrawPlayerRot();
 
-		//弾の向き
-		//DrawBulletRot();
+		//プレイヤーの位置
+		DrawPlayerPos();
+
+		//外積計算結果
+		Drawfver();
 
 #endif // _DEBUG
 
@@ -701,23 +704,40 @@ void DrawPlayerRot()
 }
 
 //=============================================================================================================
-//弾の向きの表示(デバック用)
+//プレイヤーの位置の表示(デバック用)
 //=============================================================================================================
-void DrawBulletRot()
+void DrawPlayerPos()
 {
 	char a_Str1[256];
 	RECT rect = { 0,140,SCREEN_WIDTH,SCREEN_HEIGHT };
 
-	//弾の情報取得
-	Bullet* pBullet = GetBullet();
+	//プレイヤーの情報取得
+	Player* pPlayer = GetPlayer();
 
 	//文字列に代入
-	sprintf(&a_Str1[0], "Bullet.rot[ %.2f , %.2f , %.2f ]\n", pBullet->dir.x, pBullet->dir.y, pBullet->dir.z);
+	sprintf(&a_Str1[0], "Player.pos[ %.2f , %.2f , %.2f ]\n", pPlayer->pos.x, pPlayer->pos.y, pPlayer->pos.z);
 
 	//テキストの描画
 	g_pfont->DrawText(NULL, &a_Str1[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(150, 255, 250, 255));
 }
 
+//=============================================================================================================
+//外積計算結果の表示(デバック用)
+//=============================================================================================================
+void Drawfver()
+{
+	char a_Str1[256];
+	RECT rect = { 0,160,SCREEN_WIDTH,SCREEN_HEIGHT };
+
+	//結果の取得
+	float ver = fRever();
+
+	//文字列に代入
+	sprintf(&a_Str1[0], "fver[ %.2f ]\n", ver);
+
+	//テキストの描画
+	g_pfont->DrawText(NULL, &a_Str1[0], -1, &rect, DT_LEFT, D3DCOLOR_RGBA(225, 150, 150, 255));
+}
 
 //=============================================================================================================
 //モードの設定

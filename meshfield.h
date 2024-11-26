@@ -13,9 +13,9 @@
 //マクロ定義
 #define MAX_X_FIELD (2)																		//x分割数
 #define MAX_Z_FIELD (2)																		//z分割数
-#define MAX_VERTEX ((MAX_X_FIELD+1)*(MAX_Z_FIELD+1))												//頂点数
-#define MAX_INDX ((MAX_Z_FIELD * 2) * (MAX_X_FIELD + (MAX_Z_FIELD * 2) -1))								//インデックス数((x+1)*2*z+(z-1)*(縮退ポリゴン数=4Z))
-#define MAX_POLY ((MAX_Z_FIELD*2)*(MAX_X_FIELD+(MAX_Z_FIELD-1)*2))										//ポリゴン数(x*z*2+(z-1)*(縮退ポリゴン=4Z))
+#define MAX_VERTEX_FIELD ((MAX_X_FIELD+1)*(MAX_Z_FIELD+1))												//頂点数
+#define MAX_INDX_FIELD ((MAX_Z_FIELD * 2) * (MAX_X_FIELD + (MAX_Z_FIELD * 2) -1))								//インデックス数((x+1)*2*z+(z-1)*(縮退ポリゴン数=4Z))
+#define MAX_POLY_FIELD ((MAX_Z_FIELD*2)*(MAX_X_FIELD+(MAX_Z_FIELD-1)*2))										//ポリゴン数(x*z*2+(z-1)*(縮退ポリゴン=4Z))
 
 //メッシュフィールド構造体
 typedef struct

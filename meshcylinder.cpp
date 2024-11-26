@@ -22,7 +22,7 @@ void InitMeshCylinder()
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//頂点バッファの生成
-	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * MAX_VERTEX,
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * MAX_VERTEX_CYLINDER,
 		D3DUSAGE_WRITEONLY,
 		FVF_VERTEX_3D,
 		D3DPOOL_MANAGED,
@@ -30,7 +30,7 @@ void InitMeshCylinder()
 		NULL);
 
 	//インデックスバッファの生成
-	pDevice->CreateIndexBuffer(sizeof(WORD) * MAX_INDX,
+	pDevice->CreateIndexBuffer(sizeof(WORD) * MAX_INDX_CYLINDER,
 		D3DUSAGE_WRITEONLY,
 		D3DFMT_INDEX16,
 		D3DPOOL_MANAGED,
@@ -201,6 +201,6 @@ void DrawMeshCylinder()
 	pDevice->SetFVF(FVF_VERTEX_3D);
 
 	//ポリゴンの描画
-	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, MAX_VERTEX, 0, MAX_POLY);//タイプ,?,どのpVtxから描画するか,頂点数,どのインデックスから描画するか,ポリゴン数
+	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLESTRIP, 0, 0, MAX_VERTEX_CYLINDER, 0, MAX_POLY_CYLINDER);//タイプ,?,どのpVtxから描画するか,頂点数,どのインデックスから描画するか,ポリゴン数
 //}
 }

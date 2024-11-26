@@ -8,6 +8,7 @@
 #include"player.h"
 #include "bullet.h"
 #include "block.h"
+#include "wall.h"
 
 //ƒOƒ|ƒoƒ‹•Ï”éŒ¾
 LPD3DXMESH g_pMeshPlayer = NULL;
@@ -216,8 +217,10 @@ void UpdatePlayer()
 		g_player.rot.y += D3DX_PI * 2.0f;
 	}
 
-	CollisionBlock_X();
-	CollisionBlock_Z();
+	//“–‚½‚è”»’è
+	//CollisionBlock_X();
+	//CollisionBlock_Z();
+	CollisionWall();
 
 	if (KeyboardTrigger(DIK_RETURN) == true)
 	{

@@ -6,10 +6,12 @@
 //============================================================
 
 #include"wall.h"
+#include"player.h"
 
 //グローバル変数宣言
-LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffWall = NULL;				//頂点バッファへのポインタ
-LPDIRECT3DTEXTURE9 g_pTextureWall = NULL;					//テクスチャへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffWall = NULL;									//頂点バッファへのポインタ
+LPDIRECT3DTEXTURE9 g_pTextureWall = NULL;										//テクスチャへのポインタ
+float fver[MAX_WALL];															//判定
 Wall g_aWall[MAX_WALL];
 
 //============================================================
@@ -153,7 +155,7 @@ void DrawWall()
 //============================================================
 //壁の設定処理
 //============================================================
-void SetWall(D3DXVECTOR3 pos,D3DXVECTOR3 rot, float fx, float fy,float fz,float a)
+void SetWall(D3DXVECTOR3 pos, D3DXVECTOR3 rot, float fWidth, float fHight, float a)
 {
 	//頂点情報へのポインタ
 	VERTEX_3D* pVtx = NULL;
@@ -167,23 +169,25 @@ void SetWall(D3DXVECTOR3 pos,D3DXVECTOR3 rot, float fx, float fy,float fz,float 
 		{
 			g_aWall[nCnt].pos = pos;
 			g_aWall[nCnt].rot = rot;
+			g_aWall[nCnt].fWidth = fWidth;
+			g_aWall[nCnt].fHight = fHight;
 
 			//頂点座標の設定
-			pVtx[0].pos.x = g_aWall[nCnt].pos.x - fx;
-			pVtx[0].pos.y = g_aWall[nCnt].pos.y + fy;
-			pVtx[0].pos.z = g_aWall[nCnt].pos.z + fz;
+			pVtx[0].pos.x = - g_aWall[nCnt].fWidth / 2;
+			pVtx[0].pos.y = + g_aWall[nCnt].fHight / 2;
+			pVtx[0].pos.z = 0.0f;
 
-			pVtx[1].pos.x = g_aWall[nCnt].pos.x + fx;
-			pVtx[1].pos.y = g_aWall[nCnt].pos.y + fy;
-			pVtx[1].pos.z = g_aWall[nCnt].pos.z + fz;
+			pVtx[1].pos.x = + g_aWall[nCnt].fWidth / 2;
+			pVtx[1].pos.y = + g_aWall[nCnt].fHight / 2;
+			pVtx[1].pos.z = 0.0f;
 
-			pVtx[2].pos.x = g_aWall[nCnt].pos.x - fx;
-			pVtx[2].pos.y = g_aWall[nCnt].pos.y - fy;
-			pVtx[2].pos.z = g_aWall[nCnt].pos.z - fz;
+			pVtx[2].pos.x = - g_aWall[nCnt].fWidth / 2;
+			pVtx[2].pos.y = - g_aWall[nCnt].fHight / 2;
+			pVtx[2].pos.z = 0.0f;
 
-			pVtx[3].pos.x = g_aWall[nCnt].pos.x + fx;
-			pVtx[3].pos.y = g_aWall[nCnt].pos.y - fy;
-			pVtx[3].pos.z = g_aWall[nCnt].pos.z - fz;
+			pVtx[3].pos.x = + g_aWall[nCnt].fWidth / 2;
+			pVtx[3].pos.y = - g_aWall[nCnt].fHight / 2;
+			pVtx[3].pos.z = 0.0f;
 
 			//頂点カラーの設定
 			pVtx[0].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, a);
@@ -200,4 +204,52 @@ void SetWall(D3DXVECTOR3 pos,D3DXVECTOR3 rot, float fx, float fy,float fz,float 
 
 	//頂点バッファのアンロック
 	g_pVtxBuffWall->Unlock();
+}
+
+//============================================================
+//壁の当たり判定
+//============================================================
+void CollisionWall()
+{
+	//プレイヤーの情報取得
+	Player* pPlayer = GetPlayer();
+
+	//頂点情報へのポインタ
+	VERTEX_3D* pVtx = NULL;
+	D3DXVECTOR3 vecWall[MAX_WALL], vecPlayer[MAX_WALL];														//aPos[0]からそれぞれへのベクトル格納用
+
+	//頂点バッファをロック
+	g_pVtxBuffWall->Lock(0, 0, (void**)&pVtx, 0);
+
+	for (int nCnt = 0; nCnt < MAX_WALL; nCnt++)
+	{
+		if (g_aWall[nCnt].bUse == true)
+		{
+			D3DXVECTOR3 aPos[2];																			//頂点座標格納用([0]:始点)
+			//float fver;																					//判定
+
+			//頂点座標格納
+			aPos[0] = g_aWall[nCnt].pos + pVtx[3].pos;
+			aPos[1] = g_aWall[nCnt].pos + pVtx[4].pos;
+
+			vecWall[nCnt] = aPos[1] - aPos[0];																//壁のベクトル
+			vecPlayer[nCnt] = pPlayer->pos - aPos[0];														//aPos[0]からプレイヤーへのベクトル
+
+			fver[nCnt] = (vecWall[nCnt].z * vecPlayer[nCnt].x) - (vecWall[nCnt].x * vecPlayer[nCnt].z);			//外積
+
+			if (fver[nCnt] > 0)
+			{
+				pPlayer->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			}
+		}
+		pVtx += 4;
+	}
+
+	//頂点バッファのアンロック
+	g_pVtxBuffWall->Unlock();
+}
+
+float fRever()
+{
+	return fver[0];
 }
