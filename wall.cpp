@@ -238,7 +238,7 @@ void CollisionWall()
 
 			if (g_aWall[nCnt].fver > 0)
 			{
-				pPlayer->pos = D3DXVECTOR3(0.0f, 30.0f, 0.0f);
+				pPlayer->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 			}
 		}
 		pVtx += 4;

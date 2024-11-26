@@ -30,7 +30,7 @@ void InitPlayer()
 	g_pMeshPlayer = NULL;
 	g_pBuffmatPlayer = NULL;
 	g_dwNumMatPlayer = 0;
-	g_player.pos = D3DXVECTOR3(0.0f, 30.0f, 0.0f);
+	g_player.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_player.posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_player.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_player.rotDest= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -40,7 +40,7 @@ void InitPlayer()
 	D3DXMatrixIdentity(&g_mtxWorldPlayer);
 
 	//Xƒtƒ@ƒCƒ‹‚Ì“Çž
-	D3DXLoadMeshFromX("data\\MODEL\\01_head.x",
+	D3DXLoadMeshFromX("data\\MODEL\\TV.x",
 		D3DXMESH_SYSTEMMEM,
 		pDevice,
 		NULL,
@@ -169,20 +169,20 @@ void UpdatePlayer()
 	{
 		g_player.pos.x += sinf(pCamera->rot.y - D3DX_PI * 0.5f) * PLAYER_SPEED;
 		g_player.pos.z += cosf(pCamera->rot.y - D3DX_PI * 0.5f) * PLAYER_SPEED;
-		g_player.rotDest.y = pCamera->rot.y - D3DX_PI / 2.0f;
+		g_player.rotDest.y = pCamera->rot.y + D3DX_PI / 2.0f;
 	}
 	else if (GetKeyboardPress(DIK_RIGHT) == true)
 	{
 		g_player.pos.x += sinf(pCamera->rot.y + D3DX_PI / 2.0f) * PLAYER_SPEED;
 		g_player.pos.z += cosf(pCamera->rot.y + D3DX_PI / 2.0f) * PLAYER_SPEED;
-		g_player.rotDest.y = pCamera->rot.y + D3DX_PI / 2.0f;
+		g_player.rotDest.y = pCamera->rot.y - D3DX_PI / 2.0f;
 
 	}
 	else if (GetKeyboardPress(DIK_UP) == true)
 	{
 		g_player.pos.x += sinf(pCamera->rot.y) * PLAYER_SPEED;
 		g_player.pos.z += cosf(pCamera->rot.y) * PLAYER_SPEED;
-		g_player.rotDest.y = pCamera->rot.y;
+		g_player.rotDest.y = pCamera->rot.y + D3DX_PI;
 	}
 	else if (GetKeyboardPress(DIK_DOWN) == true)
 	{
@@ -199,7 +199,7 @@ void UpdatePlayer()
 
 		g_player.pos.x += sinf(rot.y) * PLAYER_SPEED;
 		g_player.pos.z += cosf(rot.y) * PLAYER_SPEED;
-		g_player.rotDest.y = rot.y;
+		g_player.rotDest.y = pCamera->rot.y;
 	}
 
 	g_player.rot.y += (g_player.rotDest.y - g_player.rot.y) * 0.15f;
