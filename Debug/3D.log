@@ -1,23 +1,2 @@
-﻿  billboard.cpp
-  block.cpp
-  bullet.cpp
-  camera.cpp
-C:\Users\student\source\repos\3D\camera.cpp(165,68): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\student\source\repos\3D\camera.cpp(166,68): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\student\source\repos\3D\camera.cpp(167,68): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\student\source\repos\3D\camera.cpp(169,68): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\student\source\repos\3D\camera.cpp(171,68): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
-  effect.cpp
-  explosion.cpp
-  input.cpp
-  light.cpp
-  main.cpp
-  meshcylinder.cpp
-  meshfieid.cpp
-  model.cpp
-  player.cpp
-  polygon.cpp
-  shadow.cpp
-  wall.cpp
-  コードを生成中...
+﻿  player.cpp
   3D.vcxproj -> C:\Users\student\source\repos\3D\Debug\3D.exe

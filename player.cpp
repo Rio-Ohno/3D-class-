@@ -220,7 +220,7 @@ void UpdatePlayer()
 	//“–‚½‚è”»’è
 	//CollisionBlock_X();
 	//CollisionBlock_Z();
-	//CollisionWall();
+	CollisionWall();
 
 	if (KeyboardTrigger(DIK_RETURN) == true)
 	{

@@ -228,8 +228,8 @@ void CollisionWall()
 			//float fver;																					//判定
 
 			//頂点座標格納
-			aPos[0] = g_aWall[nCnt].pos + pVtx[3].pos;
-			aPos[1] = g_aWall[nCnt].pos + pVtx[4].pos;
+			aPos[0] = g_aWall[nCnt].pos + pVtx[2].pos;
+			aPos[1] = g_aWall[nCnt].pos + pVtx[3].pos;
 
 			vecWall[nCnt] = aPos[1] - aPos[0];																//壁のベクトル
 			vecPlayer[nCnt] = pPlayer->pos - aPos[0];														//aPos[0]からプレイヤーへのベクトル
