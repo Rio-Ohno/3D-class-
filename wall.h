@@ -19,10 +19,12 @@ typedef struct
 {
 	D3DXVECTOR3 pos;																		//位置
 	D3DXVECTOR3 rot;																		//向き
+	D3DXVECTOR3 vecWall;																	//vecLine
+	D3DXVECTOR3 aPos[2];																	//頂点座標格納用([0]:始点)
+	D3DXVECTOR3 fver;																		//判定
 	D3DXMATRIX mtxWorldWall;																//ワールドマトリックス
 	float fWidth;																			//幅
 	float fHight;																			//高さ
-	float fver;																				//判定
 	bool bUse;																				//使用しているかどうか
 }Wall;
 

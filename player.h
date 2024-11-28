@@ -27,7 +27,10 @@ typedef struct
 	D3DXVECTOR3 vtxMin;					//モデルの最小値
 	D3DXVECTOR3 vtxMax;					//モデルの最大値
 	D3DXVECTOR3 size;					//サイズ(大きさ)
+	D3DXVECTOR3 move;					//移動量
 	int nIndxShadow;					//影のインデックス格納用
+	bool bjump;							//ジャンプ
+	bool bUse;							//使用しているかどうか
 }Player;
 
 //プロトタイプ宣言

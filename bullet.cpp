@@ -8,6 +8,7 @@
 #include"bullet.h"
 #include "shadow.h"
 #include "explosion.h"
+#include"wall.h"
 
 //グローバル変数宣言
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBuffBullet = NULL;										//頂点バッファへのポインタ
@@ -119,9 +120,15 @@ void UpdateBullet()
 	{
 		if (g_aBullet[nCnt].bUse == true)
 		{
+			//前回の位置を保存
+			g_aBullet[nCnt].posOld = g_aBullet[nCnt].pos;
 
-			g_aBullet[nCnt].pos.x += sinf(g_aBullet[nCnt].dir.y) * BULLET_SPEED;
-			g_aBullet[nCnt].pos.z += cosf(g_aBullet[nCnt].dir.y) * BULLET_SPEED;
+			float rot = g_aBullet[nCnt].dir.y + D3DX_PI;
+
+			//移動量更新
+			g_aBullet[nCnt].move.x = sinf(rot) * BULLET_SPEED;
+			g_aBullet[nCnt].move.y = g_aBullet[nCnt].pos.y;
+			g_aBullet[nCnt].move.z = cosf(rot) * BULLET_SPEED;
 
 			//寿命が尽きたら消す
 			g_aBullet[nCnt].nLife--;
@@ -130,6 +137,24 @@ void UpdateBullet()
 				g_aBullet[nCnt].bUse = false;
 				SetExplosion(g_aBullet[nCnt].pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f), g_aBullet[nCnt].rot, g_aBullet[nCnt].radius);
 			}
+
+			//目標の移動方向（角度）の補正
+			if (rot > D3DX_PI)
+			{
+				rot -= D3DX_PI * 2.0f;
+			}
+			else if (g_aBullet[nCnt].dir.y + D3DX_PI < -D3DX_PI)
+			{
+				rot += D3DX_PI * 2.0f;
+			}
+
+			CollisionBullet();
+
+			//位置の更新
+			g_aBullet[nCnt].pos += g_aBullet[nCnt].move;
+
+			//影の位置更新
+			SetPositionShadow(g_aBullet[nCnt].nIndexShadow, g_aBullet[nCnt].pos);
 
 			//頂点座標の設定
 			pVtx[0].pos.x = g_aBullet[nCnt].pos.x - g_aBullet[nCnt].radius;
@@ -147,9 +172,6 @@ void UpdateBullet()
 			pVtx[3].pos.x = g_aBullet[nCnt].pos.x + g_aBullet[nCnt].radius;
 			pVtx[3].pos.y = g_aBullet[nCnt].pos.y - g_aBullet[nCnt].radius;
 			pVtx[3].pos.z = g_aBullet[nCnt].pos.z;
-
-			//影の位置更新
-			SetPositionShadow(g_aBullet[nCnt].nIndexShadow, g_aBullet[nCnt].pos);
 		}
 		pVtx += 4;
 	}
@@ -281,4 +303,43 @@ void SetBullet(D3DXVECTOR3 pos, D3DXVECTOR3 dir, float radius)
 Bullet* GetBullet()
 {
 	return &g_aBullet[0];
+}
+
+//============================================================
+// 弾の当たり判定
+//============================================================
+bool CollisionBullet()		
+{
+
+	for (int nCnt = 0; nCnt < MAX_BULLET; nCnt++)
+	{
+		if (g_aBullet[nCnt].bUse == true)
+		{	
+			//++++++++++++++++
+			//壁との当たり判定
+			//++++++++++++++++
+			
+			//壁の情報取得
+			Wall* pWall = GetWall();
+
+			D3DXVECTOR3 vecLine = pWall->vecWall;//vecLine格納
+			D3DXVECTOR3 vecMove = g_aBullet[nCnt].move - pWall->aPos[0];
+
+			//計算結果格納用
+			D3DXVECTOR3 vecNor = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+			//外積
+			D3DXVec3Cross(&vecNor, &pWall->vecWall, &vecMove);
+
+			if (vecNor.y < 0)
+			{
+				SetExplosion(g_aBullet[nCnt].posOld, D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f), g_aBullet[nCnt].rot, g_aBullet[nCnt].radius * 0.9f);
+				vecNor *= -1;
+
+				//内積
+				float fvec = (vecMove.x*vecNor.z);
+			}
+		}
+	}
+	return g_aBullet[0].ver;
 }

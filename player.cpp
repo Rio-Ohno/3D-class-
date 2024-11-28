@@ -34,6 +34,7 @@ void InitPlayer()
 	g_player.posOld = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_player.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_player.rotDest= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	g_player.move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	g_player.nIndxShadow = SetShadow(g_player.pos,g_player.rot,D3DXVECTOR3(1.0f,0.5f,1.0f));
 
 	//ワールドマトリックスの初期化
@@ -167,21 +168,21 @@ void UpdatePlayer()
 
 	if (GetKeyboardPress(DIK_LEFT) == true)
 	{
-		g_player.pos.x += sinf(pCamera->rot.y - D3DX_PI * 0.5f) * PLAYER_SPEED;
-		g_player.pos.z += cosf(pCamera->rot.y - D3DX_PI * 0.5f) * PLAYER_SPEED;
+		g_player.move.x += sinf(pCamera->rot.y - D3DX_PI * 0.5f) * PLAYER_SPEED;
+		g_player.move.z += cosf(pCamera->rot.y - D3DX_PI * 0.5f) * PLAYER_SPEED;
 		g_player.rotDest.y = pCamera->rot.y + D3DX_PI / 2.0f;
 	}
 	else if (GetKeyboardPress(DIK_RIGHT) == true)
 	{
-		g_player.pos.x += sinf(pCamera->rot.y + D3DX_PI / 2.0f) * PLAYER_SPEED;
-		g_player.pos.z += cosf(pCamera->rot.y + D3DX_PI / 2.0f) * PLAYER_SPEED;
+		g_player.move.x += sinf(pCamera->rot.y + D3DX_PI / 2.0f) * PLAYER_SPEED;
+		g_player.move.z += cosf(pCamera->rot.y + D3DX_PI / 2.0f) * PLAYER_SPEED;
 		g_player.rotDest.y = pCamera->rot.y - D3DX_PI / 2.0f;
 
 	}
 	else if (GetKeyboardPress(DIK_UP) == true)
 	{
-		g_player.pos.x += sinf(pCamera->rot.y) * PLAYER_SPEED;
-		g_player.pos.z += cosf(pCamera->rot.y) * PLAYER_SPEED;
+		g_player.move.x += sinf(pCamera->rot.y) * PLAYER_SPEED;
+		g_player.move.z += cosf(pCamera->rot.y) * PLAYER_SPEED;
 		g_player.rotDest.y = pCamera->rot.y + D3DX_PI;
 	}
 	else if (GetKeyboardPress(DIK_DOWN) == true)
@@ -197,12 +198,34 @@ void UpdatePlayer()
 			rot.y = -(pCamera->rot.y + D3DX_PI);
 		}
 
-		g_player.pos.x += sinf(rot.y) * PLAYER_SPEED;
-		g_player.pos.z += cosf(rot.y) * PLAYER_SPEED;
+		g_player.move.x += sinf(rot.y) * PLAYER_SPEED;
+		g_player.move.z += cosf(rot.y) * PLAYER_SPEED;
 		g_player.rotDest.y = pCamera->rot.y;
 	}
 
+	//ジャンプ
+	if (g_player.bjump == false)
+	{
+		if (KeyboardTrigger(DIK_SPACE) == true)
+		{
+			g_player.move.y += 30.0f;
+			g_player.bjump = true;
+		}
+	}
+
+	g_player.move.y -= 0.8;
+
 	g_player.rot.y += (g_player.rotDest.y - g_player.rot.y) * 0.15f;
+
+	//位置の更新
+	g_player.pos += g_player.move;
+
+	//床判定
+	if (g_player.pos.y < 0)
+	{
+		g_player.pos.y = 0;
+		g_player.bjump = false;
+	}
 
 	//影の位置更新
 	SetPositionShadow(g_player.nIndxShadow, g_player.pos);
@@ -224,7 +247,7 @@ void UpdatePlayer()
 
 	if (KeyboardTrigger(DIK_RETURN) == true)
 	{
-		SetBullet(g_player.pos, g_player.rot, 5.0f);
+		SetBullet(D3DXVECTOR3(g_player.pos.x, g_player.pos.y, g_player.pos.z), g_player.rot, 5.0f);
 	}
 }
 

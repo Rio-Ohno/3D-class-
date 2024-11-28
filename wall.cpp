@@ -30,6 +30,10 @@ void InitWall()
 	{
 		g_aWall[nCnt].pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_aWall[nCnt].rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aWall[nCnt].vecWall = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aWall[nCnt].fver = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		g_aWall[nCnt].fWidth = 0.0f;
+		g_aWall[nCnt].fHight = 0.0f;
 		g_aWall[nCnt].bUse = false;
 	}
 
@@ -213,39 +217,38 @@ void CollisionWall()
 	//プレイヤーの情報取得
 	Player* pPlayer = GetPlayer();
 
-	//頂点情報へのポインタ
-	VERTEX_3D* pVtx = NULL;
-	D3DXVECTOR3 vecWall[MAX_WALL], vecPlayer[MAX_WALL];														//aPos[0]からそれぞれへのベクトル格納用
-
-	//頂点バッファをロック
-	g_pVtxBuffWall->Lock(0, 0, (void**)&pVtx, 0);
+	D3DXVECTOR3 vecPlayer;																												//aPos[0]からそれぞれへのベクトル格納用
 
 	for (int nCnt = 0; nCnt < MAX_WALL; nCnt++)
 	{
 		if (g_aWall[nCnt].bUse == true)
 		{
-			D3DXVECTOR3 aPos[2];																			//頂点座標格納用([0]:始点)
-			//float fver;																					//判定
+			//float fver;																												//判定
 
 			//頂点座標格納
-			aPos[0] = g_aWall[nCnt].pos + pVtx[2].pos;
-			aPos[1] = g_aWall[nCnt].pos + pVtx[3].pos;
+			g_aWall[nCnt].aPos[0].x = g_aWall[nCnt].pos.x - cosf(g_aWall[nCnt].rot.y) * (g_aWall[nCnt].fWidth / 2);
+			g_aWall[nCnt].aPos[0].z = g_aWall[nCnt].pos.z + sinf(g_aWall[nCnt].rot.y) * (g_aWall[nCnt].fWidth / 2);
 
-			vecWall[nCnt] = aPos[1] - aPos[0];																//壁のベクトル
-			vecPlayer[nCnt] = pPlayer->pos - aPos[0];														//aPos[0]からプレイヤーへのベクトル
+			g_aWall[nCnt].aPos[1].x = g_aWall[nCnt].pos.x + cosf(g_aWall[nCnt].rot.y) * (g_aWall[nCnt].fWidth / 2);
+			g_aWall[nCnt].aPos[1].z = g_aWall[nCnt].pos.z - sinf(g_aWall[nCnt].rot.y) * (g_aWall[nCnt].fWidth / 2);
+			
+			//aPos[0] = g_aWall[nCnt].pos + pVtx[2].pos;
+			//aPos[1] = g_aWall[nCnt].pos + pVtx[3].pos;
 
-			g_aWall[nCnt].fver = (vecWall[nCnt].z * vecPlayer[nCnt].x) - (vecWall[nCnt].x * vecPlayer[nCnt].z);			//外積
 
-			if (g_aWall[nCnt].fver > 0)
+			g_aWall[nCnt].vecWall = g_aWall[nCnt].aPos[1] - g_aWall[nCnt].aPos[0];													//壁のベクトル(境界線ベクトル)
+			vecPlayer = pPlayer->pos - g_aWall[nCnt].aPos[0];																		//aPos[0]からプレイヤーへのベクトル
+
+			//外積
+			D3DXVec3Cross(&g_aWall[nCnt].fver, &g_aWall[nCnt].vecWall, &vecPlayer);
+
+			if (g_aWall[nCnt].fver.y < 0)
 			{
-				pPlayer->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				pPlayer->pos = pPlayer->posOld;
 			}
 		}
-		pVtx += 4;
 	}
 
-	//頂点バッファのアンロック
-	g_pVtxBuffWall->Unlock();
 }
 
 Wall* GetWall()
