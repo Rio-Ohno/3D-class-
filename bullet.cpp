@@ -333,11 +333,16 @@ bool CollisionBullet()
 
 			if (vecNor.y < 0)
 			{
+				//–@ü‚Ì³‹K‰»
+				D3DXVec3Normalize(&vecNor, &vecNor);
+
 				SetExplosion(g_aBullet[nCnt].posOld, D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f), g_aBullet[nCnt].rot, g_aBullet[nCnt].radius * 0.9f);
 				vecNor *= -1;
 
 				//“àÏ
-				float fvec = (vecMove.x*vecNor.z);
+				float fvec = (vecMove.x * vecNor.x) + (vecMove.z * vecNor.z);
+
+				//float vecC = vecNor * fvec;
 			}
 		}
 	}

@@ -31,8 +31,8 @@ void InitLight()
 	}
 
 	//ƒ‰ƒCƒg‚Ì•ûŒü‚ğİ’è
-	vecDir[0] = D3DXVECTOR3(0.2f, -0.8f, -0.4f);
-	vecDir[1] = D3DXVECTOR3(-0.4f, -0.8f, -0.4f);
+	vecDir[0] = D3DXVECTOR3(0.2f, -0.8f, -0.2f);
+	vecDir[1] = D3DXVECTOR3(-0.2f, -0.8f, -0.4f);
 	vecDir[2] = D3DXVECTOR3(0.0f, -0.8f, 0.2f);
 
 	for (int nCnt = 0; nCnt < MAX_LIGHT; nCnt++)

@@ -51,7 +51,7 @@ void InitMeshCylinder()
 
 	//頂点情報へのポインタ
 	VERTEX_3D* pVtx = NULL;
-	int radius = 150;														//半径
+	int radius = 50;														//半径
 	int index = 0;
 
 	//頂点バッファをロック
@@ -77,17 +77,6 @@ void InitMeshCylinder()
 			
 			//頂点カラーの設定
 			pVtx[index].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0);
-
-			//テクスチャ座標の設定
-			//pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-			//pVtx[1].tex = D3DXVECTOR2(0.5f, 0.0f);
-			//pVtx[2].tex = D3DXVECTOR2(1.0f, 0.0f);
-			//pVtx[3].tex = D3DXVECTOR2(0.0f, 0.5f);
-			//pVtx[4].tex = D3DXVECTOR2(0.5f, 0.5f);
-			//pVtx[5].tex = D3DXVECTOR2(1.0f, 0.5f);
-			//pVtx[6].tex = D3DXVECTOR2(0.0f, 1.0f);
-			//pVtx[7].tex = D3DXVECTOR2(0.5f, 1.0f);
-			//pVtx[8].tex = D3DXVECTOR2(1.0f, 1.0f);
 
 			index++;
 		}

@@ -11,10 +11,10 @@
 LPD3DXMESH g_pMeshModel = NULL;
 LPD3DXBUFFER g_pBuffmatModel = NULL;
 DWORD g_dwNumMatModel = 0;
-LPDIRECT3DTEXTURE9 g_apTextureModel[MAX_MAT] = {};
 D3DXVECTOR3 g_posModel;
 D3DXVECTOR3 g_rotModel;
 D3DXMATRIX g_mtxWorldModel;
+LPDIRECT3DTEXTURE9 apTextureModel[MAX_MAT];
 
 //============================================================
 // モデルの初期化処理
@@ -50,14 +50,14 @@ void InitModel()
 	for (int nCnt = 0; nCnt < (int)g_dwNumMatModel; nCnt++)
 	{
 		//テクスチャポインタの初期化
-		g_apTextureModel[nCnt] = {};
+		apTextureModel[nCnt] = {};
 
 		if (pMat[nCnt].pTextureFilename != NULL)
 		{
 			//テクスチャの読込
 			D3DXCreateTextureFromFile(pDevice,
 				pMat[nCnt].pTextureFilename,
-				&g_apTextureModel[nCnt]);
+				&apTextureModel[nCnt]);
 
 		}
 	}
@@ -84,10 +84,10 @@ void UninitModel()
 
 	for (int nCnt = 0; nCnt < (int)g_dwNumMatModel; nCnt++)
 	{
-		if (g_apTextureModel[nCnt] != NULL)
+		if (apTextureModel[nCnt] != NULL)
 		{
-			g_apTextureModel[nCnt]->Release();
-			g_apTextureModel[nCnt] = NULL;
+			apTextureModel[nCnt]->Release();
+			apTextureModel[nCnt] = NULL;
 		}
 	}
 }
@@ -137,7 +137,7 @@ void DrawModel()
 		pDevice->SetMaterial(&pMat[nCnt].MatD3D);
 
 		//テクスチャの設定
-		pDevice->SetTexture(0, g_apTextureModel[nCnt]);
+		pDevice->SetTexture(0, apTextureModel[nCnt]);
 
 		//モデル(パーツ)の描画
 		g_pMeshModel->DrawSubset(nCnt);

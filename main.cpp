@@ -28,6 +28,7 @@
 #include "meshfield.h"
 #include "meshcylinder.h"
 #include "block.h"
+#include"meshwall.h"
 
 //グローバル変数宣言
 LPDIRECT3D9 g_pD3D = NULL;											 //DirectX3Dオブジェクトへのポインタ
@@ -35,7 +36,7 @@ LPD3DXFONT g_pfont = NULL;											 //フォントへのポインタ
 LPDIRECT3DDEVICE9 g_pD3DDevice = NULL;								 //DirectX3Dデバイスへのポインタ
 MODE g_mode = MODE_TITLE;											 //現在のモード
 int g_nCountFPS = 0;												 //FPSカウンタ
-bool bWire=false;													 //ワイヤーフレームのフラグ
+bool bWire = false;													 //ワイヤーフレームのフラグ
 
 //=========================================================
 //メイン関数
@@ -322,14 +323,21 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	SetBillboard(D3DXVECTOR3(0.0f, 5.0f, 0.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 10.0f);
 
+	InitMeshWall();
+	SetMeshWall(D3DXVECTOR3(-100.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, -D3DX_PI / 2.0f, 0.0f));
+	SetMeshWall(D3DXVECTOR3(100.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2.0f, 0.0f));
+	SetMeshWall(D3DXVECTOR3(0.0f, 0.0f, 100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+	SetMeshWall(D3DXVECTOR3(0.0f, 0.0f, -100.0f), D3DXVECTOR3(0.0f, D3DX_PI, 0.0f));
+
+
 	InitMeshCylinder();
 
-	InitWall();
+	//InitWall();
 
-	SetWall(D3DXVECTOR3(-100.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, -D3DX_PI / 2.0f, 0.0f), 200.0f, 100.0f, 0.7f);//左
-	SetWall(D3DXVECTOR3(100.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2.0f, 0.0f), 200.0f, 100.0f, 0.7f);//右
-	SetWall(D3DXVECTOR3(0.0f, 50.0f, 100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 200.0f, 100.0f, 0.7f);//奥
-	SetWall(D3DXVECTOR3(0.0f, 50.0f, -100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), -200.0f, 100.0f, 0.7f);//手前
+	//SetWall(D3DXVECTOR3(-100.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, -D3DX_PI / 2.0f, 0.0f), 200.0f, 100.0f, 0.7f);//左
+	//SetWall(D3DXVECTOR3(100.0f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2.0f, 0.0f), 200.0f, 100.0f, 0.7f);//右
+	//SetWall(D3DXVECTOR3(0.0f, 50.0f, 100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), 200.0f, 100.0f, 0.7f);//奥
+	//SetWall(D3DXVECTOR3(0.0f, 50.0f, -100.0f), D3DXVECTOR3(0.0f, 0.0f, 0.0f), -200.0f, 100.0f, 0.7f);//手前
 
 	//SetWall(D3DXVECTOR3(-100.1f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, D3DX_PI / 2.0f, 0.0f), 200.0f, 100.0f, 0.3f);//左裏
 	//SetWall(D3DXVECTOR3(100.1f, 50.0f, 0.0f), D3DXVECTOR3(0.0f, -D3DX_PI / 2.0f, 0.0f), 200.0f, 100.0f, 0.3f);//右裏
@@ -388,9 +396,11 @@ void Uninit()
 
 	UninitBillboard();
 
+	UninitMeshWall();
+
 	UninitMeshCylinder();
 
-	UninitWall();
+	//UninitWall();
 
 	UninitCamera();
 
@@ -490,9 +500,11 @@ void Update()
 
 	UpdateBillboard();
 
+	UpdateMeshWall();
+
 	UpdateMeshCylinder();
 
-	UpdateWall();
+	//UpdateWall();
 
 	UpdatePlayer();
 
@@ -557,9 +569,11 @@ void Draw()
 
 		DrawShadow();
 
-		DrawMeshCylinder();
+		DrawMeshWall();
 
-		DrawWall();
+		//DrawMeshCylinder();
+
+		//DrawWall();
 
 		//DrawModel();
 
