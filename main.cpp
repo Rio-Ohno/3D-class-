@@ -15,7 +15,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <crtdbg.h>
-#include "Model.h"
 #include "camera.h"
 #include "light.h"
 #include "polygon.h"

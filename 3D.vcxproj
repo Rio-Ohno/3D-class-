@@ -154,7 +154,7 @@
     <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="meshcylinder.cpp" />
-    <ClCompile Include="meshfieid.cpp" />
+    <ClCompile Include="meshfield.cpp" />
     <ClCompile Include="meshwall.cpp" />
     <ClCompile Include="model.cpp" />
     <ClCompile Include="player.cpp" />
