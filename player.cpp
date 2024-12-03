@@ -315,11 +315,18 @@ void UpdatePlayer()
 	}
 
 	//全モデル(パーツ)の更新
-	//for (int nCnt = 0; nCnt < g_player.nNumModel; nCnt++)
-	//{
-	//	//キー情報から位置と向きを算出
-	//	int
-	//}
+	for (int nCnt = 0; nCnt < g_player.nNumModel; nCnt++)
+	{//キー情報から位置と向きを算出
+
+		//次のキー
+		int NextKey = (g_player.nNumKey + 1) % (g_player.nKey+1);
+
+		//差分
+		D3DXVECTOR3 nSabunn;
+
+    	//nSabunn.x = (g_player.aMotionInfo[g_player.motionType].aKeyInfo[NextKey].aKEY.fPosX) - (g_player.aMotionInfo[g_player.motionType].aKeyInfo[g_player.nKey].aKEY.fPosX);
+
+	}
 }
 
 //============================================================
@@ -418,8 +425,7 @@ void SetMotion(MOTIONTYPE type)
 	case MOTIONTYPE_NEUTRAL:
 
 		g_player.bLoopMotion = true;
-		g_player.nNumKey = 2;
-		
+		g_player.nNumKey = 2;		
 
 		break;
 

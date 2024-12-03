@@ -70,7 +70,7 @@ typedef struct
 	D3DXVECTOR3 move;					//移動量
 	D3DXMATRIX mtxWorldPlayer;			//プレイヤーのワールドマトリックス
 	Model aModel[MAX_PARTS];			//モデル(パーツ)
-	Motion_Info aMotionInfo[MAX_MOTION];//モーション情報
+	Motion_Info aMotionInfo[MOTIONTYPE_MAX];//モーション情報
 	MOTIONTYPE motionType;				//モーションの種類
 	int nNumModel;						//モデル(パーツ)の総数
 	int nNumMotion;						//モーションの最大数

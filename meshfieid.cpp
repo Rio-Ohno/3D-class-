@@ -42,13 +42,10 @@ void InitMeshField()
 		NULL,
 		&g_pTextureMeshField);
 
-	//for (int nCnt = 0; nCnt < MAX_INDX; nCnt++)
-	//{
 		g_aMeshField.pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		g_aMeshField.rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		g_aMeshField.fHight = 100.0f;
-		g_aMeshField.fWidth = 100.0f;
-	//}
+		g_aMeshField.fHight = 200.0f;
+		g_aMeshField.fWidth = 200.0f;
 
 	//頂点情報へのポインタ
 	VERTEX_3D* pVtx = NULL;
@@ -56,14 +53,15 @@ void InitMeshField()
 	//頂点バッファをロック
 	g_pVtxBuffMeshField->Lock(0, 0, (void**)&pVtx, 0);
 
-	int nData = MAX_X_FIELD / 2;//ずらす量
+	int nDatax = MAX_X_FIELD / 2;//ずらす量
+	int nDataz = MAX_Z_FIELD / 2;//ずらす量
 	int nCntx = 0;//カウンター
 	int nCntz = 0;//カウンター
 
 	for (nCntz = 0; nCntz <= MAX_Z_FIELD; nCntz++)
 	{
-		float posz = g_aMeshField.fHight / (nData - nCntz);
-		if (nData - nCntz == 0)//0で割ったなら
+		float posz = g_aMeshField.fHight * 2 / (MAX_Z_FIELD) * (nDataz - nCntz);
+		if (nDataz - nCntz == 0)//0で割ったなら
 		{
 			posz = 0.0f;
 		}
@@ -72,8 +70,8 @@ void InitMeshField()
 		{
 			int nCntVertex = nCntx + nCntz * (MAX_X_FIELD + 1);
 
-			float posx = g_aMeshField.fWidth / (nCntx - nData);
-			if (nCntx - nData == 0)//0で割ったなら
+			float posx = g_aMeshField.fWidth * 2 / (MAX_X_FIELD) * (nCntx - nDatax);
+			if (nCntx - nDatax == 0)//0で割ったなら
 			{
 				posx = 0.0f;
 			}

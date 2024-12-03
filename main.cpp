@@ -400,7 +400,7 @@ void Uninit()
 
 	UninitMeshCylinder();
 
-	//UninitWall();
+	UninitWall();
 
 	UninitCamera();
 
@@ -504,7 +504,7 @@ void Update()
 
 	UpdateMeshCylinder();
 
-	//UpdateWall();
+	UpdateWall();
 
 	UpdatePlayer();
 
@@ -569,11 +569,11 @@ void Draw()
 
 		DrawShadow();
 
-		DrawMeshWall();
+		//DrawMeshWall();
 
-		//DrawMeshCylinder();
+		DrawMeshCylinder();
 
-		//DrawWall();
+		DrawWall();
 
 		//DrawModel();
 

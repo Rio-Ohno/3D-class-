@@ -42,7 +42,7 @@ void InitLight()
 		g_light[nCnt].Direction = vecDir[nCnt];
 
 		//ライトを設定する
-		pDevice->SetLight(0, &g_light[nCnt]);
+		pDevice->SetLight(nCnt, &g_light[nCnt]);
 	}
 
 	//ライトを有効にする

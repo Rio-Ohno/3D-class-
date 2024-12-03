@@ -57,7 +57,8 @@ void InitMeshWall()
 	//頂点バッファをロック
 	g_pVtxBuffMeshWall->Lock(0, 0, (void**)&pVtx, 0);
 
-	int nData = MAX_X_WALL / 2;//ずらす量
+	int nDatax = MAX_X_WALL / 2;//ずらす量
+	int nDatay = MAX_X_WALL / 2;//ずらす量
 	int nCntx = 0;//カウンター
 	int nCnty = 0;//カウンター
 
@@ -67,8 +68,8 @@ void InitMeshWall()
 		//{
 			for (nCnty = 0; nCnty <= MAX_Y_WALL; nCnty++)
 			{
-				float posy = g_aMeshWall[nCnt].fHight / (nData - nCnty);
-				if (nData - nCnty == 0)//0で割ったなら
+				float posy = g_aMeshWall[nCnt].fHight * 2 / (MAX_Y_WALL) * (nDatay - nCnty);
+				if (nDatay - nCnty == 0)//0で割ったなら
 				{
 					posy = 0.0f;
 				}
@@ -77,8 +78,8 @@ void InitMeshWall()
 				{
 					int nCntVertex = nCntx + nCnty * (MAX_X_WALL + 1);
 
-					float posx = g_aMeshWall[nCnt].fWidth / (nCntx - nData);
-					if (nCntx - nData == 0)//0で割ったなら
+					float posx = g_aMeshWall[nCnt].fWidth * 2 / (MAX_X_WALL) * (nCntx - nDatax);
+					if (nCntx - nDatax == 0)//0で割ったなら
 					{
 						posx = 0.0f;
 					}
