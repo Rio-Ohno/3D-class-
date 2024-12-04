@@ -16,13 +16,15 @@ static  Key_Info g_keyNeutrall[]=
 { //Key0
 	{40,
 	//パーツ0
-	{{0.0f,0.2f,0.0f,0.06f, 0.0f, 0.0f},
+	{{0.0f,0.0f,0.0f,0.06f, 0.0f, 0.0f},
 	//パーツ1
 	 {0.0f ,0.0f ,0.0f,-0.16f, 0.0f, 0.0f}}
 	},
 	 //Key1
 	{40,
-	{{0.0f, 1.2f, 0.0f,0.06f, 0.0f, 0.0f},
+	//パーツ0
+	{{0.0f, 0.0f, 0.0f,0.06f, 0.0f, 0.0f},
+	//パーツ1
 	{0.0f, 0.0f, 0.0f,-0.09f, 0.0f, 0.0f}}
 	}
 };
@@ -314,49 +316,63 @@ void UpdatePlayer()
 		SetBullet(D3DXVECTOR3(g_player.pos.x, g_player.pos.y, g_player.pos.z), g_player.rot, 5.0f);
 	}
 
+	SetMotion(g_player.motionType);
+
 	//全モデル(パーツ)の更新
-	//for (int nCntModel = 0; nCntModel < g_player.nNumModel; nCntModel++)
-	//{//キー情報から位置と向きを算出
+	for (int nCntModel = 0; nCntModel < g_player.nNumModel; nCntModel++)
+	{//キー情報から位置と向きを算出
 
-	//	//次のキー
-	//	int NextKey = (g_player.nKey + 1) % g_player.nNumKey;
+		//次のキー
+		int NextKey = (g_player.nKey + 1) % g_player.nNumKey;
 
-	//	//差分
-	//	D3DXVECTOR3 sPos,sRot;
+		if (g_player.nKey >= g_player.nNumKey || NextKey >= g_player.nNumKey)
+		{//キーの最大数より大きくなったら
+			g_player.nKey = 0;
+		}
 
- //   	sPos.x = g_keyNeutrall[NextKey].aKEY[nCntModel].fPosX - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fPosX;
-	//	sPos.y = g_keyNeutrall[NextKey].aKEY[nCntModel].fPosY - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fPosY;
-	//	sPos.z = g_keyNeutrall[NextKey].aKEY[nCntModel].fPosZ - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fPosZ;
-	//											 													 
-	//	sRot.x = g_keyNeutrall[NextKey].aKEY[nCntModel].fRotX - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fRotX;
-	//	sRot.y = g_keyNeutrall[NextKey].aKEY[nCntModel].fRotY - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fRotY;
-	//	sRot.z = g_keyNeutrall[NextKey].aKEY[nCntModel].fRotZ - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fRotZ;
+		//差分
+		D3DXVECTOR3 sPos,sRot;
+
+    	sPos.x = g_keyNeutrall[NextKey].aKEY[nCntModel].fPosX - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fPosX;
+		sPos.y = g_keyNeutrall[NextKey].aKEY[nCntModel].fPosY - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fPosY;
+		sPos.z = g_keyNeutrall[NextKey].aKEY[nCntModel].fPosZ - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fPosZ;
+												 													 
+		sRot.x = g_keyNeutrall[NextKey].aKEY[nCntModel].fRotX - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fRotX;
+		sRot.y = g_keyNeutrall[NextKey].aKEY[nCntModel].fRotY - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fRotY;
+		sRot.z = g_keyNeutrall[NextKey].aKEY[nCntModel].fRotZ - g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fRotZ;
 
 
-	//	//計算結果格納用
-	//	D3DXVECTOR3 fAnsPos, fAnsRot;
+		//計算結果格納用
+		D3DXVECTOR3 fAnsPos, fAnsRot;
 
-	//	//(モーションカウンター)/(再生フレーム数)
-	//	float fData = (float)g_player.nCounterMotion / g_keyNeutrall[g_player.nKey].nFrame;
+		//(モーションカウンター)/(再生フレーム数)
+		float fData = (float)g_player.nCounterMotion / g_keyNeutrall[g_player.nKey].nFrame;
 
-	//	fAnsPos.x = g_player.aModel[nCntModel].pos.x + sPos.x * fData;
-	//	fAnsPos.y = g_player.aModel[nCntModel].pos.y + sPos.y * fData;
-	//	fAnsPos.z = g_player.aModel[nCntModel].pos.z + sPos.z * fData;
-	//									
-	//	fAnsRot.x = g_player.aModel[nCntModel].rot.x + sRot.x * fData;
-	//	fAnsRot.y = g_player.aModel[nCntModel].rot.y + sRot.y * fData;
-	//	fAnsRot.z = g_player.aModel[nCntModel].rot.z + sRot.z * fData;
+		fAnsPos.x = g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fPosX * fData;
+		fAnsPos.y = g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fPosY * fData;
+		fAnsPos.z = g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fPosZ * fData;
+					  	   						   
+		fAnsRot.x = g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fRotX * fData;
+		fAnsRot.y = g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fRotY * fData;
+		fAnsRot.z = g_keyNeutrall[g_player.nKey].aKEY[nCntModel].fRotZ * fData;
 
-	//	//位置と向きを反映
-	//	g_player.aModel[nCntModel].pos.x = fAnsPos.x;
-	//	g_player.aModel[nCntModel].pos.y = fAnsPos.y;
-	//	g_player.aModel[nCntModel].pos.z = fAnsPos.z;
+		//位置と向きを反映
+		g_player.aModel[nCntModel].pos.x += fAnsPos.x;
+		g_player.aModel[nCntModel].pos.y += fAnsPos.y;
+		g_player.aModel[nCntModel].pos.z += fAnsPos.z;
 
-	//	g_player.aModel[nCntModel].rot.x = fAnsRot.x;
-	//	g_player.aModel[nCntModel].rot.y = fAnsRot.y;
-	//	g_player.aModel[nCntModel].rot.z = fAnsRot.z;
+		g_player.aModel[nCntModel].rot.x = fAnsRot.x;
+		g_player.aModel[nCntModel].rot.y = fAnsRot.y;
+		g_player.aModel[nCntModel].rot.z = fAnsRot.z;
 
-	//}
+	}
+	g_player.nCounterMotion++;
+
+	if (g_player.nCounterMotion >= g_keyNeutrall[g_player.nKey].nFrame)
+	{
+		g_player.nCounterMotion = 0;
+		g_player.nKey++;
+	}
 }
 
 //============================================================
